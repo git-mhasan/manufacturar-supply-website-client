@@ -1,10 +1,16 @@
 import logo from './logo.svg';
 import './App.css';
+import { Route, Routes } from 'react-router-dom';
+import Home from './Pages/Home/Home';
+import Header from './Shared/Header/Header';
 
 function App() {
   return (
     <div className="App">
-      <button className='btn btn-primary'>My test Button</button>
+      <Header logo={logo}></Header>
+      <Routes>
+        <Route path="/" element={<Home />} />
+      </Routes>
     </div>
   );
 }
