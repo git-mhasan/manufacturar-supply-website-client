@@ -6,7 +6,7 @@ import Header from './Shared/Header/Header';
 
 function App() {
   return (
-    <div className="App">
+    <div className="mx-auto px-9 md:px-12 max-w-6xl">
       <Header logo={logo}></Header>
       <Routes>
         <Route path="/" element={<Home />} />
