@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
+import logo from '../../logo.svg';
+
 
 const Header = ({ logo }) => {
 
@@ -18,7 +20,7 @@ const Header = ({ logo }) => {
 
         <div className="navbar bg-base-100">
             <div className="flex-1">
-                <Link to="" className="btn btn-ghost normal-case text-xl ite">Horizon</Link>
+                <Link to="" className="btn btn-ghost normal-case text-2xl ite"><img src={logo} style={{ width: "35px", height: "35px", marginRight: "8px" }} alt="" /> Horizon</Link>
             </div>
             <div className="md:flex navbar-end hidden">
                 <ul className="menu menu-horizontal p-0">

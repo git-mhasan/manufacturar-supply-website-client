@@ -12,7 +12,7 @@ const Marquee = () => {
 
     return (
         <div className='my-5 md:my-8 lg:my-10'>
-            <h2 className='text-center font-bold text-3xl my-4'>Our Partner</h2>
+            <h2 className='text-center font-bold text-3xl my-14 text-accent'>Our Partner</h2>
             <div className="relative flex overflow-x-hidden">
                 <div className="py-12 animate-marquee flex">
                     {marqeeItems}
