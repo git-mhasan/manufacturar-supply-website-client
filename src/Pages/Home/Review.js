@@ -5,7 +5,7 @@ const Review = () => {
         <div className='my-5 md:my-8 lg:my-10'>
             <section className="mb-20 text-gray-700">
                 <div className="text-center md:max-w-xl lg:max-w-3xl mx-auto">
-                    <h3 className="text-3xl font-bold mb-6 text-accent">Testimonials</h3>
+                    <h3 className="text-3xl font-bold mb-6 text-accent">Review</h3>
                 </div>
 
                 <div className="grid md:grid-cols-3 gap-6 lg:gap-12 text-center">
