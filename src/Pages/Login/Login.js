@@ -3,21 +3,33 @@ import { useForm } from 'react-hook-form';
 import { Link } from 'react-router-dom';
 import auth from '../../firebase.init';
 import { useSignInWithEmailAndPassword, useSignInWithGoogle } from 'react-firebase-hooks/auth';
+import Spinner from '../../Shared/Spinner';
+import { toast } from 'react-toastify';
 
 const Login = () => {
     const [signInWithGoogle, gUser, gLoading, gError] = useSignInWithGoogle(auth);
     const { register, handleSubmit, formState: { errors }, } = useForm();
 
-    const [
-        signInWithEmailAndPassword,
-        user,
-        loading,
-        error,
-    ] = useSignInWithEmailAndPassword(auth);
+    const [signInWithEmailAndPassword, user, loading, error,] = useSignInWithEmailAndPassword(auth);
 
     // const signInWithGoogle = () => { };
 
-    const onSubmit = (data) => { console.log(data) };
+    const onSubmit = (data) => {
+        const email = data.email;
+        const password = data.password;
+        console.log(email + " " + password);
+        signInWithEmailAndPassword(auth, email, password);
+    };
+
+    if (loading || gLoading) {
+        return <div className='my-5 md:my-8 lg:my-10'>
+            <h2 className='text-center font-bold text-3xl my-14 text-black'>Please Wait...</h2>
+            <Spinner></Spinner>
+        </div>
+    }
+    if (error || gError) {
+        toast(error?.message || gError?.message)
+    }
 
     return (
         <div>
