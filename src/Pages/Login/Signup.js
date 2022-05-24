@@ -1,11 +1,31 @@
 import React from 'react';
+import { useCreateUserWithEmailAndPassword, useUpdateProfile } from 'react-firebase-hooks/auth';
 import { useForm } from 'react-hook-form';
 import { Link } from 'react-router-dom';
+import { toast } from 'react-toastify';
+import auth from '../../firebase.init';
+import Spinner from '../../Shared/Spinner';
 
 const Signup = () => {
     const { register, handleSubmit, formState: { errors }, } = useForm();
+    const [createUserWithEmailAndPassword, user, loading, error,] = useCreateUserWithEmailAndPassword(auth);
 
-    const onSubmit = (data) => console.log(data);
+    const [updateProfile, updating, updateError] = useUpdateProfile(auth);
+
+    const onSubmit = async (data) => {
+        await createUserWithEmailAndPassword(data.email, data.password);
+        await updateProfile({ displayName: data.name });
+    };
+
+    if (loading || updating) {
+        return <div className='my-5 md:my-8 lg:my-10'>
+            <h2 className='text-center font-bold text-3xl my-14 text-black'>Please Wait...</h2>
+            <Spinner></Spinner>
+        </div>
+    }
+    if (error || updateError) {
+        toast(error?.message || updateError?.message)
+    }
 
     return (
         <div>

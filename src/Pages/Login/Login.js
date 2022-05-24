@@ -14,11 +14,8 @@ const Login = () => {
 
     // const signInWithGoogle = () => { };
 
-    const onSubmit = (data) => {
-        const email = data.email;
-        const password = data.password;
-        console.log(email + " " + password);
-        signInWithEmailAndPassword(auth, email, password);
+    const onSubmit = async (data) => {
+        await signInWithEmailAndPassword(auth, data.email, data.password);
     };
 
     if (loading || gLoading) {
