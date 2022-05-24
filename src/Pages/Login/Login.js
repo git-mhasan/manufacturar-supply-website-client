@@ -4,18 +4,20 @@ import { Link } from 'react-router-dom';
 
 const Login = () => {
 
-    const { register, handleSubmit, formState: { errors },
-    } = useForm();
+    const { register, handleSubmit, formState: { errors }, } = useForm();
+
     const onSubmit = (data) => console.log(data);
+
+    const signInWithGoogle = () => {
+
+    }
 
     return (
         <div>
-
-
             <div className="hero min-h-full ">
-                <div className="hero-content flex-col lg:flex-row-reverse">
-                    <div className="card flex-shrink-0 w-full max-w-sm shadow-2xl bg-base-100 border-t-2">
-                        <div className="card-body">
+                <div className="hero-content flex-col lg:flex-row">
+                    <div className="card flex-shrink-0 lg:min-w-2xl mix-w-xl shadow-2xl bg-base-100 border-t-2">
+                        <div className="card-body ">
                             <h1 className="text-2xl font-bold text-center">Login</h1>
                             <form onSubmit={handleSubmit(onSubmit)}>
 
@@ -27,7 +29,7 @@ const Login = () => {
                                     <input
                                         type="email"
                                         placeholder="Your Email"
-                                        className="input input-bordered w-full max-w-xs"
+                                        className="input input-bordered w-[500px] max-w-xs"
                                         {...register("email", {
                                             required: {
                                                 value: true,
@@ -53,7 +55,7 @@ const Login = () => {
                                     <input
                                         type="password"
                                         placeholder="Password"
-                                        className="input input-bordered w-full max-w-xs"
+                                        className="input input-bordered w-[500px] max-w-xs"
                                         {...register("password", {
                                             required: {
                                                 value: true,
@@ -74,6 +76,9 @@ const Login = () => {
                                     <label className="label">
                                         <Link to='' className="label-text-alt link link-hover">Forgot password?</Link>
                                     </label>
+                                    <label className="label text-sm">
+                                        New to Horizon Equipments Ltd ? <Link to='/signup' className="label-text-alt link link-hover ml-3">Create an account</Link>
+                                    </label>
                                 </div>
 
                                 {/* submit button */}
@@ -81,15 +86,17 @@ const Login = () => {
 
                             </form>
 
+                            <div className="divider">OR</div>
+                            <button
+                                onClick={() => signInWithGoogle()}
+                                className="btn btn-outline"
+                            >Continue with Google</button>
                         </div>
                     </div>
-                    <div className="text-center lg:text-left">
-                        <h1 className="text-5xl font-bold">Login now!</h1>
-                        <p className="py-6">Provident cupiditate voluptatem et in. Quaerat fugiat ut assumenda excepturi exercitationem quasi. In deleniti eaque aut repudiandae et a id nisi.</p>
-                    </div>
+
                 </div>
-            </div>
-        </div>
+            </div >
+        </div >
     );
 };
 

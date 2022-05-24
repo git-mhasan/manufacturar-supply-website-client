@@ -33,8 +33,8 @@ const Banner = () => {
                         alt="..."
                     />
                     <div className="carousel-caption hidden md:block absolute text-center">
-                        <h5 className="text-xl">First slide label</h5>
-                        <p>Some representative placeholder content for the first slide.</p>
+                        <h5 className="text-xl">Land Survey</h5>
+                        <p>We make world class Level Machine, Theodolite for land survey.</p>
                     </div>
                 </div>
                 <div className="carousel-item relative float-left w-full">
@@ -44,8 +44,8 @@ const Banner = () => {
                         alt="..."
                     />
                     <div className="carousel-caption hidden md:block absolute text-center">
-                        <h5 className="text-xl">Second slide label</h5>
-                        <p>Some representative placeholder content for the second slide.</p>
+                        <h5 className="text-xl">Hydro Survey</h5>
+                        <p>Our domain in Hydro servey and bathymetry is one of the strongest one.</p>
                     </div>
                 </div>
                 <div className="carousel-item relative float-left w-full">
@@ -55,8 +55,8 @@ const Banner = () => {
                         alt="..."
                     />
                     <div className="carousel-caption hidden md:block absolute text-center">
-                        <h5 className="text-xl">Third slide label</h5>
-                        <p>Some representative placeholder content for the third slide.</p>
+                        <h5 className="text-xl">Aerial Survey</h5>
+                        <p>We also make aerial survey equipments.</p>
                     </div>
                 </div>
             </div>
