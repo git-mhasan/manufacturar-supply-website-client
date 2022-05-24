@@ -5,7 +5,7 @@ import url from '../../Shared/Utils/ServerUrl';
 import ToolCard from './ToolCard';
 
 const Tools = () => {
-    console.log(`${url}products`);
+    // console.log(`${url}products`);
     const { isLoading, error, data: products } = useQuery('products', () =>
         fetch(`${url}products`).then(res =>
             res.json()

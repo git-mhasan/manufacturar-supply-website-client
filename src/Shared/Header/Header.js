@@ -1,12 +1,18 @@
+import { signOut } from 'firebase/auth';
 import React, { useState } from 'react';
+import { useAuthState } from 'react-firebase-hooks/auth';
 import { Link } from 'react-router-dom';
-import logo from '../../logo.svg';
+import auth from '../../firebase.init';
+import Spinner from '../../Shared/Spinner';
 
 
 const Header = ({ logo }) => {
 
     const [menuBtn, setMenuBtn] = useState(false);
-
+    const [user, loading, error] = useAuthState(auth);
+    const LogOut = () => {
+        signOut(auth);
+    }
     const menuItem = <>
         <li><Link to="/">Home</Link></li>
         <li><Link to="/purchase">Purchase</Link></li>
@@ -14,8 +20,15 @@ const Header = ({ logo }) => {
         <li><Link to="/contact">Contact</Link></li>
         <li><Link to="/about">About</Link></li>
         <li><Link to="/dashboard">Dashboard</Link></li>
-        <li><Link to="/login">Login</Link></li>
+        {!!user ? <li><Link onClick={LogOut} to="">Logout</Link></li> : <li><Link to="/login">Login</Link></li>}
     </>
+
+    if (loading) {
+        return <div className='my-5 md:my-8 lg:my-10'>
+            <h2 className='text-center font-bold text-3xl my-14 text-black'>Please Wait...</h2>
+            <Spinner></Spinner>
+        </div>
+    }
     return (
 
         <div className="navbar bg-base-100">

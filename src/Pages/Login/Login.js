@@ -1,16 +1,23 @@
 import React from 'react';
 import { useForm } from 'react-hook-form';
 import { Link } from 'react-router-dom';
+import auth from '../../firebase.init';
+import { useSignInWithEmailAndPassword, useSignInWithGoogle } from 'react-firebase-hooks/auth';
 
 const Login = () => {
-
+    const [signInWithGoogle, gUser, gLoading, gError] = useSignInWithGoogle(auth);
     const { register, handleSubmit, formState: { errors }, } = useForm();
 
-    const onSubmit = (data) => console.log(data);
+    const [
+        signInWithEmailAndPassword,
+        user,
+        loading,
+        error,
+    ] = useSignInWithEmailAndPassword(auth);
 
-    const signInWithGoogle = () => {
+    // const signInWithGoogle = () => { };
 
-    }
+    const onSubmit = (data) => { console.log(data) };
 
     return (
         <div>
