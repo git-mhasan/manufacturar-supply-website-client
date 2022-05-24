@@ -1,7 +1,7 @@
 import React from 'react';
 import { useCreateUserWithEmailAndPassword, useUpdateProfile } from 'react-firebase-hooks/auth';
 import { useForm } from 'react-hook-form';
-import { Link } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import auth from '../../firebase.init';
 import Spinner from '../../Shared/Spinner';
@@ -11,6 +11,10 @@ const Signup = () => {
     const [createUserWithEmailAndPassword, user, loading, error,] = useCreateUserWithEmailAndPassword(auth);
 
     const [updateProfile, updating, updateError] = useUpdateProfile(auth);
+
+    const navigate = useNavigate();
+    const location = useLocation();
+    let from = location.state?.from?.pathname || "/";
 
     const onSubmit = async (data) => {
         await createUserWithEmailAndPassword(data.email, data.password);
@@ -25,6 +29,10 @@ const Signup = () => {
     }
     if (error || updateError) {
         toast(error?.message || updateError?.message)
+    }
+
+    if (user) {
+        navigate(from, { replace: true });
     }
 
     return (

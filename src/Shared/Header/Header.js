@@ -23,12 +23,13 @@ const Header = ({ logo }) => {
         {!!user ? <li><Link onClick={LogOut} to="">Logout</Link></li> : <li><Link to="/login">Login</Link></li>}
     </>
 
-    if (loading) {
-        return <div className='my-5 md:my-8 lg:my-10'>
-            <h2 className='text-center font-bold text-3xl my-14 text-black'>Please Wait...</h2>
-            <Spinner></Spinner>
-        </div>
-    }
+    // if (loading) {
+    //     return <div className='my-5 md:my-8 lg:my-10'>
+    //         <h2 className='text-center font-bold text-3xl my-14 text-black'>Please Wait...</h2>
+    //         <Spinner></Spinner>
+    //     </div>
+    // }
+
     return (
 
         <div className="navbar bg-base-100">

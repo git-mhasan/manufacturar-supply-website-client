@@ -1,6 +1,6 @@
 import React from 'react';
 import { useForm } from 'react-hook-form';
-import { Link } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import auth from '../../firebase.init';
 import { useSignInWithEmailAndPassword, useSignInWithGoogle } from 'react-firebase-hooks/auth';
 import Spinner from '../../Shared/Spinner';
@@ -12,7 +12,12 @@ const Login = () => {
 
     const [signInWithEmailAndPassword, user, loading, error,] = useSignInWithEmailAndPassword(auth);
 
-    // const signInWithGoogle = () => { };
+    const navigate = useNavigate();
+    const location = useLocation();
+
+    let from = location.state?.from?.pathname || "/";
+
+
 
     const onSubmit = async (data) => {
         await signInWithEmailAndPassword(auth, data.email, data.password);
@@ -26,6 +31,10 @@ const Login = () => {
     }
     if (error || gError) {
         toast(error?.message || gError?.message)
+    }
+
+    if (user || gUser) {
+        navigate(from, { replace: true });
     }
 
     return (
