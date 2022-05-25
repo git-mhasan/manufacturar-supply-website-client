@@ -20,7 +20,7 @@ const Login = () => {
 
 
     const onSubmit = async (data) => {
-        await signInWithEmailAndPassword(auth, data.email, data.password);
+        await signInWithEmailAndPassword(data.email, data.password);
     };
 
     if (loading || gLoading) {

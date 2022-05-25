@@ -1,8 +1,8 @@
 import React from 'react';
-import { useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 const ToolCard = ({ product }) => {
-    const navigate = useNavigate();
+
     return (
         <div>
             <div className="card lg:card-side bg-base-100 shadow-xl">
@@ -14,7 +14,8 @@ const ToolCard = ({ product }) => {
                     <p className='text-lg'>Available: {product.available} pcs</p>
                     <p className='text-lg'>Unit Price: {product.unitPrice} Tk.</p>
                     <div className="card-actions justify-end">
-                        <button onClick={() => { navigate("/purchase") }} className="btn btn-primary">Buy Now</button>
+
+                        <Link to={`/purchase/${product._id}`} className="btn btn-primary">Buy Now</Link>
                     </div>
                 </div>
             </div>

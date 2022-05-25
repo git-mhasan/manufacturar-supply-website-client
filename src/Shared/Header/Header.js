@@ -21,7 +21,7 @@ const Header = ({ logo }) => {
         <li><Link to="/about">About</Link></li>
         {!!user && <li><Link to="/dashboard">Dashboard</Link></li>}
         {!!user ? <li><Link onClick={LogOut} to=""><p>Logout
-            <span className='font-bold'>&#123;{user?.displayName?.split(" ")[0]}&#125;</span></p></Link></li> : <li><Link to="/login">Login</Link></li>}
+            <span className='font-bold'>&#40;{user?.displayName?.split(" ")[0]}&#41;</span></p></Link></li> : <li><Link to="/login">Login</Link></li>}
     </>
 
     // if (loading) {
