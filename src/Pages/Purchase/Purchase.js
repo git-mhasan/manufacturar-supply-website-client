@@ -16,7 +16,6 @@ const Purchase = () => {
         urlParam ? setProductId(urlParam.id) : setProductId('');
     }, [urlParam])
 
-    console.log(urlParam.id);
 
     return (
         <div>

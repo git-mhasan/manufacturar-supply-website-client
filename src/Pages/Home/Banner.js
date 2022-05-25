@@ -1,4 +1,6 @@
 import React from 'react';
+import banner1 from "../../images/banner-1.jpg"
+import banner3 from "../../images/banner-3.png"
 
 const Banner = () => {
     return (
@@ -28,13 +30,13 @@ const Banner = () => {
             <div className="carousel-inner relative w-full overflow-hidden">
                 <div className="carousel-item active relative float-left w-full">
                     <img
-                        src="https://mdbootstrap.com/img/Photos/Slides/img%20(15).jpg"
+                        src={banner3}
                         className="block w-full"
                         alt="..."
                     />
                     <div className="carousel-caption hidden md:block absolute text-center">
-                        <h5 className="text-xl">Land Survey</h5>
-                        <p>We make world class Level Machine, Theodolite for land survey.</p>
+                        <h5 className="text-xl">Aerial Survey</h5>
+                        <p>We also make aerial survey equipments.</p>
                     </div>
                 </div>
                 <div className="carousel-item relative float-left w-full">
@@ -50,13 +52,13 @@ const Banner = () => {
                 </div>
                 <div className="carousel-item relative float-left w-full">
                     <img
-                        src="https://mdbootstrap.com/img/Photos/Slides/img%20(23).jpg"
+                        src={banner1}
                         className="block w-full"
                         alt="..."
                     />
-                    <div className="carousel-caption hidden md:block absolute text-center">
-                        <h5 className="text-xl">Aerial Survey</h5>
-                        <p>We also make aerial survey equipments.</p>
+                    <div className="carousel-caption hidden md:block absolute text-center font-bold">
+                        <h5 className="text-xl">Land Survey</h5>
+                        <p>We make world class Level Machine, Theodolite for land survey.</p>
                     </div>
                 </div>
             </div>

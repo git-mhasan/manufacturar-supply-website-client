@@ -1,5 +1,6 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { useAuthState } from 'react-firebase-hooks/auth';
+import { useForm } from 'react-hook-form';
 import { useQuery } from 'react-query';
 import auth from '../../firebase.init';
 import Spinner from '../../Shared/Spinner';
@@ -8,16 +9,20 @@ import url from '../../Shared/Utils/ServerUrl';
 const ProductDetails = ({ productId }) => {
 
     const [user, loading, error] = useAuthState(auth);
-    const [orderQuantity, setOrderQuantity] = useState(0);
+    const [orderQuantity, setOrderQuantity] = useState('');
 
-    const handleQuantityChange = event => {
-        setOrderQuantity(event.target.value);
-        console.log(orderQuantity);
-        // console.log(event.target.value);
+    const { register, handleSubmit, formState: { errors }, } = useForm();
+
+    const onSubmit = data => {
+        console.log(data);
     }
-    useEffect(() => {
 
-    }, [])
+    // const handleQuantityChange = event => {
+    //     setOrderQuantity(event.target.value);
+    //     console.log(orderQuantity);
+    //     // console.log(event.target.value);
+    // }
+
 
     const { data: product, isLoading } = useQuery(['productById', productId], () => fetch(`${url}product/${productId}`)
         .then(res => res.json()))
@@ -28,14 +33,19 @@ const ProductDetails = ({ productId }) => {
             <Spinner></Spinner>
         </div>
     }
+
     return (
         <div className='my-5 md:my-8 lg:my-10'>
             {
-                productId ?
+                Object.keys(product).length === 0 ?
+                    <div className="card bg-base-100 shadow-xl border-t h-[300px] items-center justify-center">
+                        <h2 className="card-title font-bold text-2xl">Please Select an Item to proceed checkout.</h2>
+                    </div>
+                    :
                     <div className="card lg:card-side bg-base-100 shadow-xl border-t">
                         <figure className='p-10 border-b-2 lg:border-r-2 lg:border-b-0 basis-2/6'><img src={product.img} alt="Album" /></figure>
                         <div className="card-body basis-4/6">
-                            <form >
+                            <form onSubmit={handleSubmit(onSubmit)}>
                                 <h2 className="card-title font-bold text-2xl mb-4">{product.name}</h2>
                                 {/* <p className='text-lg'>Specification: {product.desc}</p> */}
 
@@ -46,24 +56,38 @@ const ProductDetails = ({ productId }) => {
 
                                 <p className='mb-2'> <span className='font-bold text-lg inline-block w-[140px]'>Unit Price: </span> <input type="number" name="price" value={product.unitPrice} disabled required className="input input-bordered w-1/4 max-w-xs text-lg" /><span className='text-sm '> Tk. (per unit price)</span></p>
 
-                                <p className='mb-2'> <span className='font-bold text-lg inline-block w-[140px]'>Available: </span> <input type="number" name="available" value={product.unitPrice} disabled required className="input input-bordered w-1/4 max-w-xs text-lg" /><span className='text-sm '> Tk. (per unit price)</span></p>
+                                <p className='mb-2'> <span className='font-bold text-lg inline-block w-[140px]'>Available: </span> <input type="number" name="available" value={product.available} disabled required className="input input-bordered w-1/4 max-w-xs text-lg" /><span className='text-sm '> pcs available</span></p>
 
-                                <p className='mb-2'> <span className='font-bold text-lg inline-block w-[140px]'>Order Quantity: </span> <input type="number" name="order" osOnChangeTimerDelay={200} onChange={handleQuantityChange} value={product.minOrder} required className="input input-bordered w-1/4 max-w-xs text-lg" /><span className='text-sm '> (Min. Order: {product.minOrder} pcs)</span></p>
+                                <p className='mb-2'> <span className='font-bold text-lg inline-block w-[140px]'>Order Quantity: </span> <input type="number" name="order" onChange={e => setOrderQuantity(e.target.value)} defaultValue={product.minOrder} className="input input-bordered w-1/4 max-w-xs text-lg"
+                                    {...register("order", {
+                                        required: {
+                                            value: true,
+                                            message: '* Order Quantity is required.'
+                                        },
+                                        min: {
+                                            value: product.minOrder,
+                                            message: '* Order Quantity must be greater than minimum order quantity.'
+                                        },
+                                        max: {
+                                            value: product.available,
+                                            message: '* Order Quantity must be less than available quantity.'
+                                        }
+                                    })}
+                                /><span className='text-sm '> (Min. Order: {product.minOrder} pcs)</span></p>
 
-                                <p className='text-lg'>Available: {product.available} pcs</p>
-                                <p className='text-lg'>Unit Price: {product.unitPrice} Tk.</p>
+                                <label className="label">
+                                    {errors.order?.type === 'required' && <span className="label-text-alt text-sm text-red-500">{errors.order.message}</span>}
+                                    {errors.order?.type === 'min' && <span className="label-text-alt text-sm text-red-500">{errors.order.message}</span>}
+                                    {errors.order?.type === 'max' && <span className="label-text-alt text-sm text-red-500">{errors.order.message}</span>}
+                                </label>
                                 <div className="card-actions justify-end">
-                                    { }
-                                    <input type="submit" value="Buy Now" disabled className="btn btn-primary max-w-xs" />
+
+                                    <input type="submit" value="Buy Now" className="btn btn-primary max-w-xs" />
 
                                 </div>
                             </form>
 
                         </div>
-                    </div>
-                    :
-                    <div className="card bg-base-100 shadow-xl border-t h-[300px] items-center justify-center">
-                        <h2 className="card-title font-bold text-2xl">Please Select an Item to proceed checkout.</h2>
                     </div>
             }
         </div>
