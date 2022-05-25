@@ -17,13 +17,6 @@ const ProductDetails = ({ productId }) => {
         console.log(data);
     }
 
-    // const handleQuantityChange = event => {
-    //     setOrderQuantity(event.target.value);
-    //     console.log(orderQuantity);
-    //     // console.log(event.target.value);
-    // }
-
-
     const { data: product, isLoading } = useQuery(['productById', productId], () => fetch(`${url}product/${productId}`)
         .then(res => res.json()))
 
