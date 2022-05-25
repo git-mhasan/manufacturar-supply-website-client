@@ -1,9 +1,10 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useCreateUserWithEmailAndPassword, useUpdateProfile } from 'react-firebase-hooks/auth';
 import { useForm } from 'react-hook-form';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import auth from '../../firebase.init';
+import useToken from '../../hooks/useToken';
 import Spinner from '../../Shared/Spinner';
 
 const Signup = () => {
@@ -15,6 +16,14 @@ const Signup = () => {
     const navigate = useNavigate();
     const location = useLocation();
     let from = location.state?.from?.pathname || "/";
+
+    const [token] = useToken(user);
+    useEffect(() => {
+        if (token) {
+            navigate(from, { replace: true });
+        }
+    }, [token, from, navigate])
+
 
     const onSubmit = async (data) => {
         await createUserWithEmailAndPassword(data.email, data.password);
@@ -29,10 +38,6 @@ const Signup = () => {
     }
     if (error || updateError) {
         toast(error?.message || updateError?.message)
-    }
-
-    if (user) {
-        navigate(from, { replace: true });
     }
 
     return (

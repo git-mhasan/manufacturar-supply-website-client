@@ -1,15 +1,23 @@
 import { signOut } from 'firebase/auth';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { Link } from 'react-router-dom';
 import auth from '../../firebase.init';
-import Spinner from '../../Shared/Spinner';
 
 
 const Header = ({ logo }) => {
 
     const [menuBtn, setMenuBtn] = useState(false);
     const [user] = useAuthState(auth);
+
+    const [userName, setUserName] = useState('');
+
+    useEffect(() => {
+        if (user) {
+            setUserName(user?.displayName);
+        }
+    }, [user, user?.displayName])
+
     const LogOut = () => {
         signOut(auth);
         localStorage.removeItem('accessToken');
@@ -18,11 +26,10 @@ const Header = ({ logo }) => {
         <li><Link to="/">Home</Link></li>
         <li><Link to="/purchase">Purchase</Link></li>
         <li><Link to="/blogs">Blogs</Link></li>
-        <li><Link to="/contact">Contact</Link></li>
-        <li><Link to="/about">About</Link></li>
+        <li><Link to="/about">Portfolio</Link></li>
         {!!user && <li><Link to="/dashboard">Dashboard</Link></li>}
         {!!user ? <li><Link onClick={LogOut} to=""><p>Logout
-            <span className='font-bold'>&#40;{user?.displayName?.split(" ")[0]}&#41;</span></p></Link></li> : <li><Link to="/login">Login</Link></li>}
+            <span className='font-bold'>&#40;{userName?.split(" ")[0]}&#41;</span></p></Link></li> : <li><Link to="/login">Login</Link></li>}
     </>
 
 
