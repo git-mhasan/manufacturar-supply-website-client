@@ -7,7 +7,7 @@ import ProductDetails from './ProductDetails';
 const Purchase = () => {
 
     const [productId, setProductId] = useState('');
-    console.log(productId);
+
     return (
         <div>
             <AllProducts setProductId={setProductId}></AllProducts>

@@ -12,7 +12,7 @@ const ProductCard = ({ product, setProductId }) => {
                     <h2 className="card-title text-sm">{product.name}</h2>
                     {/* <p>{product.desc.length > 20 ? product.desc.slice(0, 20) + "..." : product.desc}</p> */}
                     <div className="card-actions">
-                        <button onClick={() => { setProductId(product._id) }} className="btn btn-xs btn-primary">Details</button>
+                        <button onClick={() => { setProductId(product._id) }} className="btn btn-xs btn-primary">purchase</button>
                     </div>
                 </div>
             </div>
