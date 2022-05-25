@@ -9,9 +9,10 @@ import Spinner from '../../Shared/Spinner';
 const Header = ({ logo }) => {
 
     const [menuBtn, setMenuBtn] = useState(false);
-    const [user, loading, error] = useAuthState(auth);
+    const [user] = useAuthState(auth);
     const LogOut = () => {
         signOut(auth);
+        localStorage.removeItem('accessToken');
     }
     const menuItem = <>
         <li><Link to="/">Home</Link></li>
@@ -24,12 +25,6 @@ const Header = ({ logo }) => {
             <span className='font-bold'>&#40;{user?.displayName?.split(" ")[0]}&#41;</span></p></Link></li> : <li><Link to="/login">Login</Link></li>}
     </>
 
-    // if (loading) {
-    //     return <div className='my-5 md:my-8 lg:my-10'>
-    //         <h2 className='text-center font-bold text-3xl my-14 text-black'>Please Wait...</h2>
-    //         <Spinner></Spinner>
-    //     </div>
-    // }
 
     return (
 

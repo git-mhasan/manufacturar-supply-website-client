@@ -1,22 +1,28 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import auth from '../../firebase.init';
 import { useSignInWithEmailAndPassword, useSignInWithGoogle } from 'react-firebase-hooks/auth';
 import Spinner from '../../Shared/Spinner';
 import { toast } from 'react-toastify';
+import useToken from '../../hooks/useToken';
 
 const Login = () => {
     const [signInWithGoogle, gUser, gLoading, gError] = useSignInWithGoogle(auth);
+    const [signInWithEmailAndPassword, user, loading, error,] = useSignInWithEmailAndPassword(auth);
     const { register, handleSubmit, formState: { errors }, } = useForm();
 
-    const [signInWithEmailAndPassword, user, loading, error,] = useSignInWithEmailAndPassword(auth);
+    const [token] = useToken(user || gUser);
 
     const navigate = useNavigate();
     const location = useLocation();
-
     let from = location.state?.from?.pathname || "/";
 
+    useEffect(() => {
+        if (token) {
+            navigate(from, { replace: true });
+        }
+    }, [token, from, navigate])
 
 
     const onSubmit = async (data) => {
@@ -31,10 +37,6 @@ const Login = () => {
     }
     if (error || gError) {
         toast(error?.message || gError?.message)
-    }
-
-    if (user || gUser) {
-        navigate(from, { replace: true });
     }
 
     return (

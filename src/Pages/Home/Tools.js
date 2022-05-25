@@ -6,15 +6,18 @@ import ToolCard from './ToolCard';
 
 const Tools = () => {
     // console.log(`${url}products`);
-    // let products;
-    const { isLoading, error, data: products } = useQuery('products', () =>
+    let products;
+    const { isLoading, error, data } = useQuery('products', () =>
         fetch(`${url}products`).then(res =>
             res.json()
         )
     )
-    // if (data) {
-    //     products = [...data]?.slice(3);
-    // }
+    if (data?.length > 6) {
+        products = [...data]?.slice(6);
+    }
+    else {
+        products = data;
+    }
 
     if (isLoading) {
         return <div className='my-5 md:my-8 lg:my-10'>
