@@ -10,7 +10,7 @@ import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import Purchase from './Pages/Purchase/Purchase';
 import RequireAuth from './Pages/Login/RequireAuth';
-import Blogs from './Pages/Blogs/Blogs';
+import Blogs from './Blogs.js/Blogs';
 
 function App() {
   return (

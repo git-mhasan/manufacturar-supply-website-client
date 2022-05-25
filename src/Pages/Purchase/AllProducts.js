@@ -2,8 +2,9 @@ import React from 'react';
 import { useQuery } from 'react-query';
 import Spinner from '../../Shared/Spinner';
 import url from '../../Shared/Utils/ServerUrl';
+import ProductCard from './ProductCard';
 
-const AllProducts = () => {
+const AllProducts = ({ setProductId }) => {
     const { isLoading, error, data: products } = useQuery('products', () =>
         fetch(`${url}products`).then(res =>
             res.json()
@@ -23,8 +24,13 @@ const AllProducts = () => {
     }
 
     return (
-        <div>
-
+        <div className='flex flex-row flex-wrap justify-center gap-3'>
+            {products.map(product => <ProductCard
+                key={product._id}
+                product={product}
+                setProductId={setProductId}
+            ></ProductCard>
+            )}
         </div>
     );
 };
