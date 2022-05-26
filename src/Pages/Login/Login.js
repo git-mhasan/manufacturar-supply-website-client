@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import auth from '../../firebase.init';
-import { useSignInWithEmailAndPassword, useSignInWithGoogle } from 'react-firebase-hooks/auth';
+import { useSendPasswordResetEmail, useSignInWithEmailAndPassword, useSignInWithGoogle } from 'react-firebase-hooks/auth';
 import Spinner from '../../Shared/Spinner';
 import { toast } from 'react-toastify';
 import useToken from '../../hooks/useToken';
@@ -10,6 +10,7 @@ import useToken from '../../hooks/useToken';
 const Login = () => {
     const [signInWithGoogle, gUser, gLoading, gError] = useSignInWithGoogle(auth);
     const [signInWithEmailAndPassword, user, loading, error,] = useSignInWithEmailAndPassword(auth);
+    const [sendPasswordResetEmail, sending, errorFP] = useSendPasswordResetEmail(auth);
     const { register, handleSubmit, formState: { errors }, } = useForm();
 
     const [token] = useToken(user || gUser);
@@ -24,6 +25,15 @@ const Login = () => {
         }
     }, [token, from, navigate])
 
+    const handleForgetPass = (data) => {
+        if (!!data.email) {
+            sendPasswordResetEmail(data.email);
+            toast.success("Email Sent.")
+        }
+        else if (data.email === "") {
+            toast.error("please give your email.")
+        }
+    }
 
     const onSubmit = async (data) => {
         await signInWithEmailAndPassword(data.email, data.password);
@@ -101,7 +111,7 @@ const Login = () => {
 
                                     {/* Forget Password */}
                                     <label className="label">
-                                        <Link to='' className="label-text-alt link link-hover">Forgot password?</Link>
+                                        <Link to='' onClick={handleForgetPass} className="label-text-alt link link-hover">Forgot password?</Link>
                                     </label>
                                     <label className="label text-sm">
                                         New to Horizon Equipments Ltd ? <Link to='/signup' className="label-text-alt link link-hover ml-3">Create an account</Link>

@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 const Portfolio = () => {
     return (
@@ -14,8 +15,19 @@ const Portfolio = () => {
                 <p>* CSS3</p>
                 <p>* Bootstrap</p>
                 <p>* Tailwind</p>
+                <p>* Javascript</p>
                 <p>* Node Js</p>
                 <p>* React</p>
+                <p>* React query</p>
+                <p>* FIrebase Authentication</p>
+                <p>* JSON Web Token</p>
+                <br />
+                <br />
+                List of Three project:<br />
+                1. <a className='text-primary' href="https://horizon-6e2ea.web.app/">Horizon Equipments Ltd.</a> <br />
+                2. <a className='text-primary' href="https://greantech-eb5f3.web.app/">Green Tech Electronics</a><br />
+                3. <a className='text-primary' href="https://laptop-mania.netlify.app/">Laptop Mania</a>
+
 
             </div>
 

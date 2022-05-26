@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { useCreateUserWithEmailAndPassword, useUpdateProfile } from 'react-firebase-hooks/auth';
+import { useCreateUserWithEmailAndPassword, useSendEmailVerification, useUpdateProfile } from 'react-firebase-hooks/auth';
 import { useForm } from 'react-hook-form';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
@@ -10,7 +10,7 @@ import Spinner from '../../Shared/Spinner';
 const Signup = () => {
     const { register, handleSubmit, formState: { errors }, } = useForm();
     const [createUserWithEmailAndPassword, user, loading, error,] = useCreateUserWithEmailAndPassword(auth);
-
+    const [sendEmailVerification, sending, errorEmail] = useSendEmailVerification(auth);
     const [updateProfile, updating, updateError] = useUpdateProfile(auth);
 
     const navigate = useNavigate();
@@ -28,16 +28,18 @@ const Signup = () => {
     const onSubmit = async (data) => {
         await createUserWithEmailAndPassword(data.email, data.password);
         await updateProfile({ displayName: data.name });
+        await sendEmailVerification();
+
     };
 
-    if (loading || updating) {
+    if (loading || updating || sending) {
         return <div className='my-5 md:my-8 lg:my-10'>
             <h2 className='text-center font-bold text-3xl my-14 text-black'>Please Wait...</h2>
             <Spinner></Spinner>
         </div>
     }
-    if (error || updateError) {
-        toast(error?.message || updateError?.message)
+    if (error || updateError || errorEmail) {
+        toast(error?.message || updateError?.message || error.message)
     }
 
     return (

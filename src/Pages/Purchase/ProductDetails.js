@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { useForm } from 'react-hook-form';
 import { useQuery } from 'react-query';
+import { toast } from 'react-toastify';
 import auth from '../../firebase.init';
 import Spinner from '../../Shared/Spinner';
 import url from '../../Shared/Utils/ServerUrl';
@@ -9,13 +10,9 @@ import url from '../../Shared/Utils/ServerUrl';
 const ProductDetails = ({ productId }) => {
 
     const [user, loading, error] = useAuthState(auth);
-    const [orderQuantity, setOrderQuantity] = useState('');
+    // const [orderQuantity, setOrderQuantity] = useState('');
 
     const { register, handleSubmit, formState: { errors }, } = useForm();
-
-    const onSubmit = data => {
-        console.log(data);
-    }
 
     const { data: product, isLoading } = useQuery(['productById', productId], () => fetch(`${url}product/${productId}`)
         .then(res => res.json()))
@@ -25,6 +22,37 @@ const ProductDetails = ({ productId }) => {
             <h2 className='text-center font-bold text-3xl my-14 text-black'>Please Wait ...</h2>
             <Spinner></Spinner>
         </div>
+    }
+
+    const onSubmit = data => {
+        const order = {
+            productId: product?._id,
+            userName: user?.displayName,
+            userEmail: user.email,
+            orderQuantity: data.order,
+            address: data.address,
+            phone: data.phone,
+        }
+
+        fetch(`${url}order`, {
+            method: 'POST',
+            headers: {
+                authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+                'content-type': 'application/json'
+            },
+            body: JSON.stringify(order)
+        })
+            .then(res => res.json())
+            .then(data => {
+                if (data.success) {
+                    toast.success(`Order placed Successfully.`)
+                }
+                else {
+                    toast.error(`Order cannot be processed.`)
+                }
+                // refetch();
+            });
+
     }
 
     return (
@@ -44,14 +72,26 @@ const ProductDetails = ({ productId }) => {
 
                                 <p className='mb-2'> <span className='font-bold text-lg inline-block w-[80px]'>Name:</span> <input type="text" name="name" disabled value={user?.displayName || ''} className="input input-bordered w-full max-w-xs text-lg" /></p>
                                 <p className='mb-2'> <span className='font-bold text-lg inline-block w-[80px]'>Email: </span> <input type="email" name="email" disabled value={user?.email || ''} className="input input-bordered w-full max-w-xs text-lg" /></p>
-                                <p className='mb-2'> <span className='font-bold text-lg inline-block w-[80px]'>Address: </span> <input type="text" name="address" required className="input input-bordered w-full max-w-xs text-lg" /></p>
-                                <p className='mb-2'> <span className='font-bold text-lg inline-block w-[80px]'>Phone: </span> <input type="text" name="phone" required className="input input-bordered w-full max-w-xs text-lg" /></p>
+                                <p className='mb-2'> <span className='font-bold text-lg inline-block w-[80px]'>Address: </span>
+                                    <input type="text" name="address" required className="input input-bordered w-full max-w-xs text-lg"
+                                        {...register("address")}
 
-                                <p className='mb-2'> <span className='font-bold text-lg inline-block w-[140px]'>Unit Price: </span> <input type="number" name="price" value={product.unitPrice} disabled required className="input input-bordered w-1/4 max-w-xs text-lg" /><span className='text-sm '> Tk. (per unit price)</span></p>
+                                    /></p>
 
-                                <p className='mb-2'> <span className='font-bold text-lg inline-block w-[140px]'>Available: </span> <input type="number" name="available" value={product.available} disabled required className="input input-bordered w-1/4 max-w-xs text-lg" /><span className='text-sm '> pcs available</span></p>
+                                <p className='mb-2'> <span className='font-bold text-lg inline-block w-[80px]'>Phone: </span>
+                                    <input type="text" name="phone" required className="input input-bordered w-full max-w-xs text-lg"
+                                        {...register("phone")}
+                                    /></p>
 
-                                <p className='mb-2'> <span className='font-bold text-lg inline-block w-[140px]'>Order Quantity: </span> <input type="number" name="order" onChange={e => setOrderQuantity(e.target.value)} defaultValue={product.minOrder} className="input input-bordered w-1/4 max-w-xs text-lg"
+                                <p className='mb-2'> <span className='font-bold text-lg inline-block w-[140px]'>Unit Price: </span> <input type="number" name="price" value={product.unitPrice} disabled required className="input input-bordered w-1/4 max-w-xs text-lg"
+
+                                /><span className='text-sm '> Tk. (per unit price)</span></p>
+
+                                <p className='mb-2'> <span className='font-bold text-lg inline-block w-[140px]'>Available: </span>
+                                    <input type="number" name="available" value={product.available} disabled required className="input input-bordered w-1/4 max-w-xs text-lg"
+                                    /><span className='text-sm '> pcs available</span></p>
+
+                                <p className='mb-2'> <span className='font-bold text-lg inline-block w-[140px]'>Order Quantity: </span> <input type="number" name="order" defaultValue={product.minOrder} className="input input-bordered w-1/4 max-w-xs text-lg"
                                     {...register("order", {
                                         required: {
                                             value: true,
@@ -75,7 +115,7 @@ const ProductDetails = ({ productId }) => {
                                 </label>
                                 <div className="card-actions justify-end">
 
-                                    <input type="submit" value="Buy Now" className="btn btn-primary max-w-xs" />
+                                    <input type="submit" value="Order" className="btn btn-primary max-w-xs" />
 
                                 </div>
                             </form>
