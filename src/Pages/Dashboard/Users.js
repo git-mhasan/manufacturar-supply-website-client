@@ -6,12 +6,20 @@ import url from '../../Shared/Utils/ServerUrl';
 import UserTable from './UserTable';
 
 const Users = () => {
-    const { isLoading, error, data } = useQuery('user', () =>
+    const { isLoading, error, data, refetch } = useQuery('user', () =>
         fetch(`${url}user`, {
             headers: {
                 authorization: `Bearer ${localStorage.getItem('accessToken')}`
             }
-        }).then(res => res.json())
+        }).then(res => {
+            if (res.status === 403) {
+                toast.error('Forbidden Data Access.');
+            }
+            if (res.status === 401) {
+                toast.error('Unauthorized Access Prevented.');
+            }
+            return res.json()
+        })
     )
 
     if (isLoading) {
@@ -20,12 +28,16 @@ const Users = () => {
             <Spinner></Spinner>
         </div>
     }
+
     if (error) {
-        toast(error.message);
+        toast.error(error);
     }
+
     return (
         <div>
-            <UserTable users={data}></UserTable>
+            <UserTable users={data}
+                refetch={refetch}
+            ></UserTable>
         </div>
     );
 };

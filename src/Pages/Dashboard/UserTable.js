@@ -1,7 +1,7 @@
 import React from 'react';
 import UserRow from './UserRow';
 
-const UserTable = ({ users }) => {
+const UserTable = ({ users, refetch }) => {
     return (
         <div>
             <div className="overflow-x-auto">
@@ -17,11 +17,14 @@ const UserTable = ({ users }) => {
                     </thead>
                     <tbody>
                         {
-                            users.map((user, index) =>
+                            users.length > 0 ? users.map((user, index) =>
                                 <UserRow key={index}
                                     user={user}
                                     index={index}
+                                    refetch={refetch}
                                 ></UserRow>)
+                                :
+                                <div><h2 className='text-xl'>No User Found</h2></div>
                         }
                     </tbody>
                 </table>
