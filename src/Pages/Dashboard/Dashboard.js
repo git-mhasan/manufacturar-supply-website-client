@@ -24,7 +24,7 @@ const Dashboard = () => {
             <input id="dashboard-sidebar" type="checkbox" className="drawer-toggle" />
             <div className="drawer-content">
                 <h2 className='text-xl font-bold text-purple-500 text-center '>Dashboard</h2>
-                <label htmlFor="dashboard-sidebar" class="btn btn-xs drawer-button lg:hidden mb-3">Dashboard</label>
+                <label htmlFor="dashboard-sidebar" className="btn btn-xs drawer-button lg:hidden mb-3">Dashboard</label>
                 <Outlet></Outlet>
             </div>
             <div className="drawer-side">

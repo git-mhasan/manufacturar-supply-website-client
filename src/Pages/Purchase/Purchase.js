@@ -8,6 +8,9 @@ import ProductDetails from './ProductDetails';
 const Purchase = () => {
 
     const [productId, setProductId] = useState('');
+    const [price, setPrice] = useState(0);
+    const [minimumOrder, setMinimumOrder] = useState(0);
+
     const urlParam = useParams();
     useEffect(() => {
         if (urlParam.id === 'undefined') {
@@ -19,8 +22,18 @@ const Purchase = () => {
 
     return (
         <div>
-            <AllProducts setProductId={setProductId}></AllProducts>
-            <ProductDetails productId={productId}></ProductDetails>
+            <AllProducts setProductId={setProductId}
+                setPrice={setPrice}
+                setMinimumOrder={setMinimumOrder}>
+            </AllProducts>
+
+            <ProductDetails
+                productId={productId}
+                price={price}
+                setPrice={setPrice}
+                minimumOrder={minimumOrder}
+                setMinimumOrder={setMinimumOrder}
+            ></ProductDetails>
         </div>
     );
 };

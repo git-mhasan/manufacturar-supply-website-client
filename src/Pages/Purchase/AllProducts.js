@@ -4,7 +4,7 @@ import Spinner from '../../Shared/Spinner';
 import url from '../../Shared/Utils/ServerUrl';
 import ProductCard from './ProductCard';
 
-const AllProducts = ({ setProductId }) => {
+const AllProducts = ({ setProductId, setPrice, setMinimumOrder }) => {
     // console.log(url);
     const { isLoading, error, data: products } = useQuery('products', () =>
         fetch(`${url}products`).then(res =>
@@ -30,6 +30,8 @@ const AllProducts = ({ setProductId }) => {
                 key={product._id}
                 product={product}
                 setProductId={setProductId}
+                setPrice={setPrice}
+                setMinimumOrder={setMinimumOrder}
             ></ProductCard>
             )}
         </div>

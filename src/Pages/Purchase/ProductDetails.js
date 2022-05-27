@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { useForm } from 'react-hook-form';
 import { useQuery } from 'react-query';
@@ -7,15 +7,20 @@ import auth from '../../firebase.init';
 import Spinner from '../../Shared/Spinner';
 import url from '../../Shared/Utils/ServerUrl';
 
-const ProductDetails = ({ productId }) => {
+const ProductDetails = ({ productId, price, setPrice, minimumOrder }) => {
 
     const [user, loading, error] = useAuthState(auth);
-    // const [orderQuantity, setOrderQuantity] = useState('');
+
 
     const { register, handleSubmit, formState: { errors }, } = useForm();
 
-    const { data: product, isLoading } = useQuery(['productById', productId], () => fetch(`${url}product/${productId}`)
+    const { data: product, isLoading, refetch } = useQuery(['productById', productId], () => fetch(`${url}product/${productId}`)
         .then(res => res.json()))
+
+    // useEffect(() => {
+    //     setMinimumOrder(product?.minOrder);
+    // }, [product])
+
 
     if (isLoading || loading) {
         return <div className='my-5 md:my-8 lg:my-10'>
@@ -24,16 +29,28 @@ const ProductDetails = ({ productId }) => {
         </div>
     }
 
+    const handleOrder = event => {
+        setPrice(parseInt(event.target.value) * parseInt(product.unitPrice))
+    }
+
     const onSubmit = data => {
+
+        const available = parseInt(product.available) - parseInt(data.order);
+        const totalPrice = parseInt(data.order) * parseInt(product.unitPrice)
         const order = {
             productId: product?._id,
+            productName: product.name,
             userName: user?.displayName,
             userEmail: user.email,
             orderQuantity: data.order,
             address: data.address,
             phone: data.phone,
+            totalPrice: totalPrice,
+            payment: false
+
         }
 
+        // order placing
         fetch(`${url}order`, {
             method: 'POST',
             headers: {
@@ -51,6 +68,21 @@ const ProductDetails = ({ productId }) => {
                     toast.error(`Order cannot be processed.`)
                 }
                 // refetch();
+            });
+
+        // update product after order.
+        fetch(`${url}product/${product?._id}`, {
+            method: 'PUT',
+            headers: {
+                authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+                'content-type': 'application/json'
+            },
+            body: JSON.stringify({ available })
+        })
+            .then(res => res.json())
+            .then(data => {
+                console.log(data.success);
+                refetch();
             });
 
     }
@@ -91,7 +123,7 @@ const ProductDetails = ({ productId }) => {
                                     <input type="number" name="available" value={product.available} disabled required className="input input-bordered w-1/4 max-w-xs text-lg"
                                     /><span className='text-sm '> pcs available</span></p>
 
-                                <p className='mb-2'> <span className='font-bold text-lg inline-block w-[140px]'>Order Quantity: </span> <input type="number" name="order" defaultValue={product.minOrder} className="input input-bordered w-1/4 max-w-xs text-lg"
+                                <p className='mb-2'> <span className='font-bold text-lg inline-block w-[140px]'>Order Quantity: </span> <input type="number" name="order" onChangeCapture={handleOrder} defaultValue={minimumOrder} className="input input-bordered w-1/4 max-w-xs text-lg"
                                     {...register("order", {
                                         required: {
                                             value: true,
@@ -113,8 +145,11 @@ const ProductDetails = ({ productId }) => {
                                     {errors.order?.type === 'min' && <span className="label-text-alt text-sm text-red-500">{errors.order.message}</span>}
                                     {errors.order?.type === 'max' && <span className="label-text-alt text-sm text-red-500">{errors.order.message}</span>}
                                 </label>
-                                <div className="card-actions justify-end">
 
+                                <p className='mb-2'> <span className='font-bold text-lg inline-block w-[140px]'>Total Price: </span> <input type="number" name="price" value={price} disabled required className="input input-bordered w-1/4 max-w-xs text-lg"
+                                /><span className='text-sm '> Tk. </span></p>
+
+                                <div className="card-actions justify-end">
                                     <input type="submit" value="Order" className="btn btn-primary max-w-xs" />
 
                                 </div>

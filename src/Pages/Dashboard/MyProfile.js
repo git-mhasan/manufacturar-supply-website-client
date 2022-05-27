@@ -67,7 +67,7 @@ const MyProfile = ({ product }) => {
     }
 
     return (
-        <div className=' flex flex-col items-center justify-center bg-accent min-w-full pb-4'>
+        <div className=' flex flex-col items-center justify-center bg-base-200 min-w-full pb-4'>
             <form onSubmit={handleOnSubmit}>
                 <h3 className='text-lg my-4 font-bold'>Update Profile</h3>
                 <div className="mb-3">
