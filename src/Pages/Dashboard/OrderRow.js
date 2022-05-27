@@ -49,14 +49,23 @@ const OrderRow = ({ order, index, refetch }) => {
                         :
                         <>
                             <button onClick={handlePayment} className='btn btn-xs bg-green-500 m-1 border-0'>Pay</button>
-                            <button onClick={() => { handleCancel(order._id) }} className='btn btn-xs bg-red-500 m-1 border-0'>X</button>
+                            <label htmlFor="cancel-confirm-modal" class="btn modal-button btn-xs bg-red-500 m-1 border-0">X</label>
                         </>
-
-
                 }
                 </td>
 
             </tr>
+
+            <input type="checkbox" id="cancel-confirm-modal" className="modal-toggle" />
+            <label htmlFor="cancel-confirm-modal" className="modal cursor-pointer">
+                <label className="modal-box relative" htmlFor="">
+                    <h3 className="text-lg font-bold">Delete Warning!</h3>
+                    <p className="py-4">Are you sure, you want to cancel the order?</p>
+                    <div className="modal-action">
+                        <label htmlFor="cancel-confirm-modal" onClick={() => { handleCancel(order._id) }} className="btn btn-sm bg-red-500 border-0">Yes</label>
+                    </div>
+                </label>
+            </label>
         </>
     );
 };

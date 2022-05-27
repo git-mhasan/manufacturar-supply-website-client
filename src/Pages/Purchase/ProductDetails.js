@@ -150,7 +150,7 @@ const ProductDetails = ({ productId, price, setPrice, minimumOrder }) => {
                                 /><span className='text-sm '> Tk. </span></p>
 
                                 <div className="card-actions justify-end">
-                                    <input type="submit" value="Order" className="btn btn-primary max-w-xs" />
+                                    <input type="submit" value="Confirm Order" className="btn btn-primary max-w-xs" />
 
                                 </div>
                             </form>

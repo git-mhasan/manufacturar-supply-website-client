@@ -72,15 +72,24 @@ const ManageOrderRow = ({ order, index, refetch }) => {
                                     ?
                                     <button onClick={() => { handleShipment(order._id) }} className='btn btn-xs bg-green-500 m-1 border-0'>Ship</button>
                                     :
-                                    <button onClick={() => { handleDelete(order._id) }} className='btn btn-xs m-1 bg-red-500 border-0'>Delete</button>
+                                    <label htmlFor="delete-confirm-modal" className="btn modal-button btn-xs m-1 bg-red-500 border-0">Delete</label>
                             }
                         </>
-
                 }
 
                 </td>
-
             </tr>
+
+            <input type="checkbox" id="delete-confirm-modal" className="modal-toggle" />
+            <label htmlFor="delete-confirm-modal" className="modal cursor-pointer">
+                <label className="modal-box relative" htmlFor="">
+                    <h3 className="text-lg font-bold">Delete Warning!</h3>
+                    <p className="py-4">Are you sure, you want to delete the order?</p>
+                    <div className="modal-action">
+                        <label htmlFor="delete-confirm-modal" onClick={() => { handleDelete(order._id) }} className="btn btn-sm bg-red-500 border-0">Delete</label>
+                    </div>
+                </label>
+            </label>
         </>
     );
 };
