@@ -52,45 +52,45 @@ const AddProduct = () => {
         <div className='bg-base-200 p-8'>
             <h2 className='font-bold text-lg mb-5 text-center'>Please Fill up all the information.</h2>
             <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col justify-center items-center">
-                <div className='w-[400px]'>
-                    <label htmlFor="name" >Product Name:</label>
-                    <input className='border mx-4'
+                <div className='w-full flex justify-center mb-3'>
+                    <label className='inline-block w-[120px] py-2' htmlFor="name" >Product Name:</label>
+                    <input className='border border-black mx-4 px-2 py-1'
                         type="text"
                         {...register("name", { required: "Please enter the value." })}
                     />
                 </div>
-                <div className='w-[400px]'>
-                    <label htmlFor="desc">Description:</label>
-                    <input className='border mx-4'
-                        type="text"
+                <div className='w-full flex justify-center mb-3'>
+                    <label className='inline-block w-[120px] py-2' htmlFor="desc">Description:</label>
+                    <textarea className='border border-black w-[200px] mx-4 h-20 px-2 py-1'
+                        type="textArea"
                         maxLength={250}
                         {...register("desc", { required: "Please enter the value." })}
                     />
                 </div>
-                <div className='w-[400px]'>
-                    <label htmlFor="img">Image Link:</label>
-                    <input className='border mx-4'
+                <div className='w-full flex justify-center mb-3'>
+                    <label className='inline-block w-[120px] py-2' htmlFor="img">Image Link:</label>
+                    <input className='border border-black mx-4 px-2 py-1'
                         type="text"
                         {...register("img", { required: "Please enter the value." })}
                     />
                 </div>
-                <div className='w-[400px]'>
-                    <label htmlFor="available">Available:</label>
-                    <input className='border mx-4'
+                <div className='w-full flex justify-center mb-3'>
+                    <label className='inline-block w-[120px] py-2' htmlFor="available">Available:</label>
+                    <input className='border border-black mx-4 px-2 py-1'
                         type="number"
                         {...register("available", { required: "Please enter the value." })}
                     />
                 </div>
-                <div className='w-[400px]'>
-                    <label htmlFor="minOrder">Min Order:</label>
-                    <input className='border mx-4'
+                <div className='w-full flex justify-center mb-3'>
+                    <label className='inline-block w-[120px] py-2' htmlFor="minOrder">Min Order:</label>
+                    <input className='border border-black mx-4 px-2 py-1'
                         type="number"
                         {...register("minOrder", { required: "Please enter the value." })}
                     />
                 </div>
-                <div className='w-[400px]'>
-                    <label htmlFor="unitPrice">Unit Price:</label>
-                    <input className='border mx-4'
+                <div className='w-full flex justify-center mb-3'>
+                    <label className='inline-block w-[120px] py-2' htmlFor="unitPrice">Unit Price:</label>
+                    <input className='border border-black mx-4 px-2 py-1'
                         type="number"
                         {...register("unitPrice", { required: "Please enter the value." })}
                     />

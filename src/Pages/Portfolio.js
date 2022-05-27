@@ -17,6 +17,7 @@ const Portfolio = () => {
                 <p>* Tailwind</p>
                 <p>* Javascript</p>
                 <p>* Node Js</p>
+                <p>* Express Js</p>
                 <p>* React</p>
                 <p>* React query</p>
                 <p>* FIrebase Authentication</p>

@@ -1,7 +1,7 @@
 import React from 'react';
-import ManageOrderRow from './ManageOrderRow';
+import ProductRow from './ProductRow';
 
-const ManageOrderTable = ({ orders, refetch }) => {
+const ProductTable = ({ products, refetch }) => {
     return (
         <div>
             <div className="overflow-x-auto">
@@ -9,23 +9,21 @@ const ManageOrderTable = ({ orders, refetch }) => {
                     <thead>
                         <tr>
                             <th>SL</th>
-                            <th>Order No.</th>
-                            <th>Email</th>
+                            <th>Image</th>
                             <th>Product Name</th>
-                            <th>Quantity</th>
-                            <th>Payment</th>
+                            <th>Stock</th>
+                            <th>Unit Price</th>
                             <th>Action</th>
                         </tr>
                     </thead>
                     <tbody>
                         {
-                            orders.length > 0 ? orders.map((order, index) =>
-                                <ManageOrderRow key={order._id}
-                                    id={order._id}
-                                    index={index}
-                                    order={order}
+                            products.length > 0 ? products.map((product, index) =>
+                                <ProductRow key={product._id}
+                                    index={index + 1}
+                                    product={product}
                                     refetch={refetch}
-                                ></ManageOrderRow>)
+                                ></ProductRow>)
                                 :
                                 <div><h2 className='text-xl'>No User Found</h2></div>
                         }
@@ -36,4 +34,4 @@ const ManageOrderTable = ({ orders, refetch }) => {
     );
 };
 
-export default ManageOrderTable;
+export default ProductTable;

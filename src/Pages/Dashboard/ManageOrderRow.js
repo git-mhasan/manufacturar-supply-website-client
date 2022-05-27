@@ -1,29 +1,11 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { toast } from 'react-toastify';
 import url from '../../Shared/Utils/ServerUrl';
+import DeleteOrderModal from './DeleteOrderModal';
 
-const ManageOrderRow = ({ order, index, refetch }) => {
+const ManageOrderRow = ({ order, id, index, refetch }) => {
 
-    const handleDelete = async (id) => {
-        await fetch(`${url}orders/ship/${id}`, {
-            method: 'DELETE',
-            headers: {
-                authorization: `Bearer ${localStorage.getItem('accessToken')}`,
-            },
-        })
-            .then(res => {
-                if (res.status === 403) {
-                    toast.error('The order cannot be deleted.');
-                }
-                return res.json()
-            })
-            .then(data => {
-                if (data.deletedCount > 0) {
-                    toast.success(`The Order is deleted.`);
-                }
-            })
-        await refetch();
-    }
+    const [deleteId, setDeleteId] = useState('');
 
 
     const handleShipment = async (id) => {
@@ -54,7 +36,7 @@ const ManageOrderRow = ({ order, index, refetch }) => {
         <>
             <tr className="hover text-sm">
                 <th>{parseInt(index) + 1}</th>
-                <td>{order?.productId.slice(order?.productId.length - 5)}</td>
+                <td>{order?._id.slice(order?._id.length - 5)}</td>
                 <td>{order?.userEmail}</td>
                 <td>{order?.productName}</td>
                 <td>{order?.payment ? "Paid" : "Unpaid"}</td>
@@ -70,26 +52,20 @@ const ManageOrderRow = ({ order, index, refetch }) => {
                             {
                                 order?.payment
                                     ?
-                                    <button onClick={() => { handleShipment(order._id) }} className='btn btn-xs bg-green-500 m-1 border-0'>Ship</button>
+                                    <button onClick={() => { handleShipment(id) }} className='btn btn-xs bg-green-500 m-1 border-0'>Ship</button>
                                     :
-                                    <label htmlFor="delete-confirm-modal" className="btn modal-button btn-xs m-1 bg-red-500 border-0">Delete</label>
+                                    <>
+                                        <label htmlFor="delete-confirm-modal" className="btn modal-button btn-xs m-1 bg-red-500 border-0" onClick={() => { setDeleteId(order._id) }} >Delete</label>
+                                    </>
                             }
                         </>
                 }
 
                 </td>
             </tr>
-
-            <input type="checkbox" id="delete-confirm-modal" className="modal-toggle" />
-            <label htmlFor="delete-confirm-modal" className="modal cursor-pointer">
-                <label className="modal-box relative" htmlFor="">
-                    <h3 className="text-lg font-bold">Delete Warning!</h3>
-                    <p className="py-4">Are you sure, you want to delete the order?</p>
-                    <div className="modal-action">
-                        <label htmlFor="delete-confirm-modal" onClick={() => { handleDelete(order._id) }} className="btn btn-sm bg-red-500 border-0">Delete</label>
-                    </div>
-                </label>
-            </label>
+            {deleteId && <DeleteOrderModal id={deleteId}
+                setDeleteId={setDeleteId} refetch={refetch}
+            ></DeleteOrderModal>}
         </>
     );
 };

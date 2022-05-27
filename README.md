@@ -1,17 +1,22 @@
-# Getting Started with Create React App
+# Horizon Equipments Ltd.
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+This website [Horizon Equipments Ltd.](https://horizon-6e2ea.web.app) is created for land survey menufacturer suply management system.
 
-## Available Scripts
+## Technology Used for Developing this website:
 
-In the project directory, you can run:
+* Tailwind
+* DaisyUi
+* NodeJS
+* ExpressJS
+* ReactJS
+* React query
+* FIrebase Authentication
+* JSON Web Token
+* Heroku for Server deployment
 
-### `npm start`
-
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
-
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
-
-### `npm test`
+## Features and Functionality of this website:
+* Supply of Product lot.
+* Admin Panel.
+* Payment Processing.
+* Shipment Tracking.
+* User Dashboard.
