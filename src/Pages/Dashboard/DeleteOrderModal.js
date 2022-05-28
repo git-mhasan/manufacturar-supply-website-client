@@ -5,7 +5,6 @@ import url from '../../Shared/Utils/ServerUrl';
 const DeleteOrderModal = ({ id, setDeleteId, refetch }) => {
 
     const handleDelete = async (id) => {
-        console.log(id);
         await fetch(`${url}orders/ship/${id}`, {
             method: 'DELETE',
             headers: {

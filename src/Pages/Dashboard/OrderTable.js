@@ -12,7 +12,7 @@ const OrderTable = ({ orders, refetch }) => {
                             <th>Order No.</th>
                             <th>Email</th>
                             <th>Product Name</th>
-                            <th>Quantity</th>
+                            <th>Price</th>
                             <th>Action</th>
                         </tr>
                     </thead>

@@ -5,7 +5,6 @@ import url from '../../Shared/Utils/ServerUrl';
 import ProductCard from './ProductCard';
 
 const AllProducts = ({ setProductId, setPrice, setMinimumOrder }) => {
-    // console.log(url);
     const { isLoading, error, data: products } = useQuery('products', () =>
         fetch(`${url}products`).then(res =>
             res.json()

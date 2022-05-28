@@ -4,7 +4,7 @@ import { toast } from 'react-toastify';
 import url from '../../Shared/Utils/ServerUrl';
 
 const AddProduct = () => {
-    const { register, handleSubmit } = useForm({ shouldUseNativeValidation: true });
+    const { register, handleSubmit, reset } = useForm({ shouldUseNativeValidation: true });
     const onSubmit = async data => {
         const product = {
             available: data.available,
@@ -14,7 +14,6 @@ const AddProduct = () => {
             name: data.name,
             unitPrice: data.unitPrice,
         }
-        console.log(product);
 
         fetch(`${url}product`, {
             method: 'POST',
@@ -28,7 +27,7 @@ const AddProduct = () => {
             .then(data => {
                 if (data.success) {
                     toast.success(`Product Inserted Successfully.`)
-                    data.reset();
+                    reset();
                 }
                 else {
                     toast.error(`Product cannot be processed.`)
@@ -37,16 +36,6 @@ const AddProduct = () => {
             });
 
     };
-
-    // const product = {
-    //     available: "200",
-    //     desc: "A total station (TS) or total station theodolite (TST) is an electronic/optical instrument used for surveying and building construction. It is an electronic transit theodolite integrated with electronic distance measurement.",
-    //     img: "http://hydrolandbd.com/wp-content/uploads/2019/09/TotalStation.jpg",
-    //     minOrder: "5",
-    //     name: "Total Station",
-    //     quantity: "0",
-    //     unitPrice: "135000"
-
 
     return (
         <div className='bg-base-200 p-8'>

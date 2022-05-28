@@ -81,7 +81,6 @@ const ProductDetails = ({ productId, price, setPrice, minimumOrder }) => {
         })
             .then(res => res.json())
             .then(data => {
-                console.log(data.success);
                 refetch();
             });
 

@@ -39,8 +39,8 @@ const ManageOrderRow = ({ order, id, index, refetch }) => {
                 <td>{order?._id.slice(order?._id.length - 5)}</td>
                 <td>{order?.userEmail}</td>
                 <td>{order?.productName}</td>
-                <td>{order?.payment ? "Paid" : "Unpaid"}</td>
                 <td>{order?.orderQuantity}</td>
+                <td>{order?.payment ? "Paid" : "Unpaid"}</td>
 
                 <td>{
                     // Shipped wiil be implemented here.
